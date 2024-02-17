@@ -1,5 +1,4 @@
 import os, platformdirs, json, requests, urllib.parse #Dependencies: python-requests, python-platformdirs
-
 #config values
 default_config = {
     'key': '',
@@ -13,6 +12,7 @@ known_errors = {
     403: 'The resource you are trying to access is forbidden', 
     404: 'The resource was not found on the server.'
 }
+blue, green, red, yellow, purple, reset = "\033[0;94m", "\033[32m","\033[0;31m", "\033[33m", "\033[0;35m", "\033[0m"
 icons = {'01d': '☀', '01n': '☀', '02d': '🌤', '02n': '🌤', '03d': '🌥', '03n': '🌥', '04d': '☁', '04n': '☁', '09d': '🌧', '09n': '🌧', '10d': '🌦', '10n': '🌦', '11d': '🌩', '11n': '🌩', '13d:': '❄', '13n': '❄', '50d': '🌫', '50n': '🌫'}
 
 def load(filename):
@@ -37,8 +37,8 @@ response = requests.get(url)
 if response.status_code == 200:
     data = response.json()
 
-    print(data['weather'][0]['main'],icons[data['weather'][0]['icon']])
-    print('Temperature: '+str(data['main']['temp'])+degrees[config['units']])
-    print('Wind: '+str(data['wind']['speed'])+speed[config['units']])
+    print(yellow+"\033[22m"+data['weather'][0]['main']+reset+' '+icons[data['weather'][0]['icon']])
+    print(green+'Temperature: '+reset+str(data['main']['temp'])+degrees[config['units']])
+    print(blue+'Wind: '+reset+str(data['wind']['speed'])+' '+speed[config['units']])
 else:
     print('Error',response.status_code,': ',known_errors[response.status_code])
